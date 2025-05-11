@@ -10,34 +10,31 @@ To write a python program for creating Chat using TCP Sockets Links.
 ## PROGRAM
 
 client 
-```
+``` 
 import socket 
 s=socket.socket() 
-s.bind(('localhost',7000)) 
-s.listen(5) 
-c,addr=s.accept() 
-address={"6A:08:AA:C2":"192.168.1.100","8A:BC:E3:FA":"192.168.1.99"}; 
+s.connect(('localhost',5000)) 
 while True: 
-            ip=c.recv(1024).decode() 
-            try: 
-                c.send(address[ip].encode()) 
-            except KeyError: 
-                c.send("Not Found".encode())
+    msg=input("Client > ") 
+    s.send(msg.encode()) 
+    print("Server > ",s.recv(1024).decode())
 ```
 
 Server
-```
-
+``` 
 import socket 
 s=socket.socket() 
-s.connect(('localhost',7000)) 
+s.bind(('localhost',5000)) 
+s.listen(5) 
+c,addr=s.accept() 
 while True: 
-    ip=input("Enter MAC Address : ") 
-    s.send(ip.encode()) 
-    print("Logical Address",s.recv(1024).decode())
+            ClientMessage=c.recv(1024).decode() 
+            print("Client > ",ClientMessage) 
+            msg=input("Server > ") 
+            c.send(msg.encode())
 ```
 ## OUPUT
-![cn ex3B](https://github.com/user-attachments/assets/784e0ba4-3e7c-49f5-b50f-9e82b08843b5)
+![alt text](<Screenshot 2025-05-11 200129.png>)
 
 ## RESULT
 Thus, the python program for creating Chat using TCP Sockets Links was successfully 
